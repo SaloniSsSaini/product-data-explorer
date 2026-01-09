@@ -4,10 +4,10 @@ import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import { useEffect } from 'react';
 
-import { useProductDetail } from '@/hooks/useProductDetail';
-import { useViewHistory } from '@/hooks/useViewHistory';
-import RelatedProducts from '@/components/product/RelatedProducts';
-import Skeleton from '@/components/ui/Skeleton';
+import { useProductDetail } from '/hooks/useProductDetail';
+import { useViewHistory } from '/hooks/useViewHistory';
+import RelatedProducts from '/components/product/RelatedProducts';
+import Skeleton from '/components/ui/Skeleton';
 
 export default function ProductDetailPage() {
   const params = useParams();
