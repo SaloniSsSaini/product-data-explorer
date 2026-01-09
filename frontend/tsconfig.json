@@ -1,11 +1,9 @@
 {
-  
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"]
-    
-    ],
+    },
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -29,7 +27,5 @@
     "**/*.ts",
     "**/*.tsx"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }
