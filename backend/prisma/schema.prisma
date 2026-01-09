@@ -1,0 +1,90 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Navigation {
+  id    String @id @default(uuid())
+  title String
+  slug  String @unique
+  url   String
+
+  categories Category[]
+  createdAt  DateTime   @default(now())
+}
+
+model Category {
+  id    Int    @id @default(autoincrement())
+  title String
+  slug  String
+
+  // 🔥 FIX HERE
+  navigationId String
+  navigation   Navigation @relation(fields: [navigationId], references: [id])
+
+  parentId Int?
+  parent   Category?  @relation("CatTree", fields: [parentId], references: [id])
+  children Category[] @relation("CatTree")
+
+  products  Product[]
+  createdAt DateTime  @default(now())
+}
+
+model Product {
+  id            Int       @id @default(autoincrement())
+  sourceId      String    @unique
+  title         String
+  price         Float?
+  currency      String?
+  imageUrl      String?
+  sourceUrl     String?
+  categoryId    Int
+  lastScrapedAt DateTime?
+
+  category Category       @relation(fields: [categoryId], references: [id])
+  detail   ProductDetail?
+  reviews  Review[]
+}
+
+model ProductDetail {
+  id           Int     @id @default(autoincrement())
+  description  String?
+  ratingsAvg   Float?
+  reviewsCount Int?
+  productId    Int     @unique
+
+  product Product @relation(fields: [productId], references: [id])
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  author    String?
+  rating    Int?
+  text      String
+  createdAt DateTime @default(now())
+  productId Int
+
+  product Product @relation(fields: [productId], references: [id])
+}
+
+model ScrapeJob {
+  id         Int       @id @default(autoincrement())
+  targetUrl  String
+  targetType String
+  status     String
+  startedAt  DateTime?
+  finishedAt DateTime?
+  errorLog   String?
+  createdAt  DateTime  @default(now())
+}
+
+model ViewHistory {
+  id        Int      @id @default(autoincrement())
+  sessionId String
+  pathJson  String
+  createdAt DateTime @default(now())
+}
