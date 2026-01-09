@@ -3,7 +3,7 @@
 import { useParams } from 'next/navigation';
 import { useState } from 'react';
 import Link from 'next/link';
-import { useProducts } from '/hooks/useProducts';
+import { useProducts } from '@/hooks/useProducts';
 
 const LIMIT = 12;
 
